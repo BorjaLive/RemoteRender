@@ -23,6 +23,8 @@ $GUI_BLENDER = GUICtrlCreateInput($blenderBin, 10, 25, 300)
 GUICtrlCreateLabel("Carpeta de trabajo", 10, 60)
 $GUI_FOLDER = GUICtrlCreateInput($wFolder, 10, 75, 300)
 
+$GUI_SHUTDOWN = GUICtrlCreateCheckbox("Apagar al terminar", 10, 110, 100)
+
 $GUI_START = GUICtrlCreateButton("Iniciar", 110, 170, 100)
 
 $GUI_OUTPOUT = GUICtrlCreateLabel("Preparado", 10, 210, 300, 20, $SS_CENTER)
@@ -78,6 +80,7 @@ Func routine()
 EndFunc
 
 Func start()
+	GUICtrlSetData($GUI_PROGRESS, 0)
 	$blenderBin = GUICtrlRead($GUI_BLENDER)
 	$wFolder = GUICtrlRead($GUI_FOLDER)
 	IniWrite ($sessionDat, "Config", "BlenderBin", $blenderBin)
@@ -87,6 +90,10 @@ Func start()
 	GUICtrlSetData($GUI_START, "Iniciar")
 	act("Trabajo terminado")
 	GUICtrlSetState ($GUI_START, $GUI_ENABLE)
+
+	If GUICtrlRead($GUI_SHUTDOWN) == $GUI_CHECKED Then
+		Shutdown(BitOR($SD_SHUTDOWN, $SD_FORCEHUNG))
+	EndIf
 EndFunc
 
 Func act($text)
