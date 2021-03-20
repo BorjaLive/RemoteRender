@@ -92,6 +92,7 @@ Func start()
 	GUICtrlSetState ($GUI_START, $GUI_ENABLE)
 
 	If GUICtrlRead($GUI_SHUTDOWN) == $GUI_CHECKED Then
+		Sleep(5000)
 		Shutdown(BitOR($SD_SHUTDOWN, $SD_FORCEHUNG))
 	EndIf
 EndFunc
